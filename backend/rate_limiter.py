@@ -311,37 +311,3 @@ async def shutdown_rate_limiter() -> None:
     if _rate_limiter:
         await _rate_limiter.shutdown()
         _rate_limiter = None
-```
-
----
-
-## 📌 **Key Components Explained**
-
-### **1. RateLimitBucket (Lines 19-48)**
-- Tracks rate limit state per Discord endpoint
-- `is_rate_limited()` - Checks if currently rate limited
-- `reset()` - Resets the bucket
-- `wait_time()` - Returns seconds to wait
-
-### **2. DiscordRateLimiter (Lines 51-286)**
-
-**Main Methods:**
-
-| Method | Purpose |
-|--------|---------|
-| `__init__()` | Initialize with configuration |
-| `initialize()` | Setup async components |
-| `execute_with_retry()` | Execute with auto-retry on 429 |
-| `wait_if_rate_limited()` | Wait if rate limited |
-| `get_status()` | Get current status |
-| `reset_all()` | Reset all buckets |
-
-### **3. Exponential Backoff (Lines 108-127)**
-```
-Formula: min(base_delay * (2 ^ attempt) + jitter, max_delay)
-
-Example with defaults:
-- Attempt 1: 1-2 seconds
-- Attempt 2: 2-4 seconds
-- Attempt 3: 4-8 seconds
-- Max: 60 seconds
