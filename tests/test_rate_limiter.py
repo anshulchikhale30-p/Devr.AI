@@ -258,10 +258,15 @@ class TestDiscordRateLimiter:
 
     def test_global_rate_limiter(self):
         """Test global rate limiter instance."""
-        limiter1 = get_rate_limiter()
-        limiter2 = get_rate_limiter()
-
-        assert limiter1 is limiter2
+        import rate_limiter as rl_module
+        original = rl_module._rate_limiter
+        try:
+            rl_module._rate_limiter = None
+            limiter1 = get_rate_limiter()
+            limiter2 = get_rate_limiter()
+            assert limiter1 is limiter2
+        finally:
+            rl_module._rate_limiter = original
 
 
 class TestBackoffCalculation:
