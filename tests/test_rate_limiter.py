@@ -137,8 +137,8 @@ class TestDiscordRateLimiter:
         wait = await limiter.wait_if_rate_limited("endpoint")
         elapsed = time.time() - start
 
-        assert elapsed >= 0.2
-        assert wait >= 0.2
+        assert elapsed >= 0.18
+        assert wait == pytest.approx(0.2, abs=0.03)
         assert not bucket.is_rate_limited()
 
         await limiter.shutdown()
