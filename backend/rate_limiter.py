@@ -80,7 +80,7 @@ class DiscordRateLimiter:
         self.max_delay = max_delay
         self.jitter = jitter
         self.buckets: Dict[str, RateLimitBucket] = {}
-        self.request_queue: asyncio.Queue = None
+        self.request_queue: Optional[asyncio.Queue] = None
         self.processor_task: Optional[asyncio.Task] = None
 
     async def initialize(self) -> None:
