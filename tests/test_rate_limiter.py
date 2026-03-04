@@ -212,7 +212,7 @@ class TestDiscordRateLimiter:
 
     def test_get_status_specific_endpoint(self, limiter):
         """Test status for specific endpoint."""
-        bucket = limiter._get_bucket("endpoint")
+        limiter._get_bucket("endpoint")
 
         status = limiter.get_status("endpoint")
 
